@@ -1,0 +1,72 @@
+.container{
+    width: 100%;
+    margin: auto;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+h2{
+    margin: 2px;
+}
+
+header{
+    background-color:#00bfff;
+    width: 100%;
+    height: 100px;
+    color: 	#0000ff
+}
+
+.app-name{
+    padding: 10px;
+    font-size: 50px;
+}
+
+
+.item-box{
+    padding: 20px;
+    background-color: #f2f2f2;
+    margin: 50px;
+}
+
+.item-box .header{
+    text-align: center;
+}
+
+input{
+    width: 70%;
+    margin: 20px 10px;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px; 
+    box-sizing: border-box;  
+}
+
+label{
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    width: 15%;
+}
+
+input[type=submit]{
+    width: 200px;   
+}
+
+.btn-con{
+    text-align: center;
+}
+
+.btn{
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.btn-success{
+    background-color:  #4CAF50;
+}
+
+
+@media screen and (min-width: 600px){
+    .item-box{
+        width: 60% ;
+        margin: 100px 20%;
+    }
+}
