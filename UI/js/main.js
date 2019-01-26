@@ -16,3 +16,18 @@ treeviews.forEach(treeview => {
         
     })
 });
+
+
+let choices = document.querySelectorAll('.choice');
+
+choices.forEach(choice => {
+    choice.addEventListener('click', (e) => {
+        this.setAttribute('checked', true);
+
+        choices.forEach(choice => {
+            if(choice !== this){
+                choice.setAttribute('checked', false)
+            }
+        })
+    })
+})
