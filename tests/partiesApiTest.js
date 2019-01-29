@@ -50,7 +50,7 @@ describe("Parties", () => {
     })
 
     describe("GET /api/v1/parties/2", () => {
-        it('should return all the existing party data', (done) => {
+        it('should return the data of the party requested', (done) => {
             chai.request(app)
                 .get("/api/v1/parties/2")
                 .end((err, res) => {

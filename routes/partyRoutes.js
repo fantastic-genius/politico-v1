@@ -7,5 +7,6 @@ const partyVersionedAPi = "/api/v1/parties/"
 
 router.post(partyVersionedAPi, partyMiddleware.createPartyMiddleware, partyController.createParty)
 router.get(partyVersionedAPi, partyController.getAllParty)
+router.get(`${partyVersionedAPi}:id`, partyController.getAParty)
 
 export default router

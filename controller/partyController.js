@@ -13,30 +13,66 @@ class PartyController{
             logoUrl
         }
 
-        const data = [
-            {
-                id: db[0],
-                name: db[0],
-                logoUrl: db[0]
-            },
-            {
-                id: db[1],
-                name: db[1],
-                logoUrl: db[1]
-            }
-        ]
+        db.push(party);
 
-        res.status(201).send({
+        return res.status(201).send({
             status: 201,
-            data
+            data: [{
+                id,
+                name
+            }]
         })
     }
 
     getAllParty(req, res){
-        res.status(200).send({
+
+        const data = [
+            {
+                id: db[0].id,
+                name: db[0].name,
+                logoUrl: db[0].logoUrl
+            },
+            {
+                id: db[1].id,
+                name: db[1].name,
+                logoUrl: db[1].logoUrl
+            }
+        ]
+
+
+        return res.status(200).send({
             status: 200,
-            data: db
+            data
         })
+    }
+
+    getAParty(req, res){
+        const id = parseInt(req.params.id)
+        
+        db.map(party => {
+            if(party.id === id){
+                const data = [
+                    {
+                        id: db[0].id,
+                        name: db[0].name,
+                        logoUrl: db[0].logoUrl
+                    }
+                ]
+
+                return res.status(200).send({
+                    status: 200,
+                    data
+                })
+                
+            }
+
+        })
+
+        return res.status(400).send({
+            status: 400,
+            message: "Party not found"
+        })
+        
     }
 }
 
