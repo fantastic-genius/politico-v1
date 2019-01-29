@@ -119,8 +119,13 @@ input[type=submit]{
     background: url('../../images/election.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    color: #0000ff;
 }
+
+.home a{
+    color: #ffffff;
+}
+
+
 
 .overlay{
     width: 100vw;
@@ -128,7 +133,7 @@ input[type=submit]{
     margin: 0;
     background-color:#000000;
     opacity: 0.8;
-    color: #0000ff;
+    color: #ffffff;
 }
 
 .home-item-con{
