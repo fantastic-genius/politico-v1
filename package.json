@@ -4,7 +4,7 @@
   "description": "voting application",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --require babel-register tests/*.js",
     "start": "nodemon index.js --exec babel-node"
   },
   "repository": {
@@ -22,6 +22,7 @@
     "babel-env": "^2.4.1",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "debug": "^4.1.1",
     "dotenv": "^6.2.0",
     "eslint": "^5.12.1",

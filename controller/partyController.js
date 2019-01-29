@@ -14,7 +14,7 @@ class PartyController{
         }
 
 
-        res.status(200).send({
+        res.status(201).send({
             status: 201,
             data: [{
                 id,
