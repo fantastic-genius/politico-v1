@@ -13,13 +13,29 @@ class PartyController{
             logoUrl
         }
 
+        const data = [
+            {
+                id: db[0],
+                name: db[0],
+                logoUrl: db[0]
+            },
+            {
+                id: db[1],
+                name: db[1],
+                logoUrl: db[1]
+            }
+        ]
 
         res.status(201).send({
             status: 201,
-            data: [{
-                id,
-                name
-            }]
+            data
+        })
+    }
+
+    getAllParty(req, res){
+        res.status(200).send({
+            status: 200,
+            data: db
         })
     }
 }
