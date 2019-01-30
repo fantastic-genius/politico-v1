@@ -52,9 +52,9 @@ class PartyController{
             if(party.id === id){
                 const data = [
                     {
-                        id: db[0].id,
-                        name: db[0].name,
-                        logoUrl: db[0].logoUrl
+                        id: party.id,
+                        name: party.name,
+                        logoUrl: party.logoUrl
                     }
                 ]
 
