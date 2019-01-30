@@ -1,7 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import debug from "debug";
-import partyRouter from "./routes/partyRoutes"
+import partyRouter from "./server/routes/partyRoutes"
  
 const PORT = 5000;
 const app = express();
