@@ -26,18 +26,17 @@ class PartyController{
 
     getAllParty(req, res){
 
-        const data = [
-            {
-                id: db[0].id,
-                name: db[0].name,
-                logoUrl: db[0].logoUrl
-            },
-            {
-                id: db[1].id,
-                name: db[1].name,
-                logoUrl: db[1].logoUrl
+        let data = []
+
+        db.map(party => {
+            let {id, name, logoUrl} = party
+            let cur_data = {
+                id,
+                name,
+                logoUrl
             }
-        ]
+            data.push(cur_data)
+        })
 
 
         return res.status(200).send({
