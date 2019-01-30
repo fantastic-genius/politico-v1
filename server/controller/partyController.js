@@ -69,8 +69,34 @@ class PartyController{
 
         return res.status(400).send({
             status: 400,
-            message: "Party not found"
+            error: "Party not found"
         })
+        
+    }
+
+    editAParty(req, res){
+        const id = parseInt(req.params.id);
+        const name = req.params.name;
+
+        db.map(party => {
+            if(party.id = id){
+                party.name = name;
+
+                return res.status(200).send({
+                    status: 200,
+                    data: [{
+                        id,
+                        name
+                    }]
+                })
+            }
+        })
+
+        return res.status(404).send({
+            status: "404",
+            error: "Party doesn't exist"
+        })
+
         
     }
 }
