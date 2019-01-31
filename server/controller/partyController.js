@@ -5,7 +5,8 @@ class PartyController{
 
         const body = req.body;
         const {name, hqAddress, logoUrl} = body;
-        const id = parties.length + 1;
+        const len = parties.length
+        const id = parties[len-1].id + 1;
         const party = {
             id,
             name,
@@ -74,20 +75,21 @@ class PartyController{
 
         })
 
-        return res.status(400).send({
-            status: 400,
+        return res.status(404).send({
+            status: 404,
             error: "Party not found"
         })
         
     }
 
     editAParty(req, res){
-        const id = parseInt(req.params.id);
-        const name = req.params.name;
+        const param_id = parseInt(req.params.id);
+        const param_name = req.body.name;
 
         parties.map(party => {
-            if(party.id = id){
-                party.name = name;
+            if(party.id === param_id){
+                party.name = param_name
+                const {id, name} = party
 
                 return res.status(200).send({
                     status: 200,
@@ -110,7 +112,7 @@ class PartyController{
     deleteParty(req, res){
         const id = parseInt(req.params.id)
         parties.map((party, i) => {
-            if(party.id == id){
+            if(party.id === id){
                 parties.splice(i, 1)
                 const name = party.name;
                 return res.status(200).send({
@@ -118,6 +120,11 @@ class PartyController{
                     message: `${name} deleted from list of political parties`
                 })
             }
+        })
+
+        return res.status(404).send({
+            status: "404",
+            error: "Party doesn't exist"
         })
     }
 }
