@@ -49,7 +49,7 @@ describe("Parties", () => {
         })
     })
 
-    describe("GET /api/v1/parties/2", () => {
+    describe("GET /api/v1/parties/id", () => {
         it('should return the data of the party requested', (done) => {
             chai.request(app)
                 .get("/api/v1/parties/2")
@@ -66,7 +66,7 @@ describe("Parties", () => {
         })
     })
 
-    describe("PATCH /api/v1/parties/id/name", () => {
+    describe("PATCH /api/v1/parties/id", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
                 .patch("/api/v1/parties/2")

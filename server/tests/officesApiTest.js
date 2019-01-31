@@ -43,4 +43,21 @@ describe("Offices", () => {
                 })
         })
     })
+
+    describe("GET /api/v1/parties/id", () => {
+        it('should return the data of the office requested', (done) => {
+            chai.request(app)
+                .get("/api/v1/offices/3")
+                .end((err, res) => {
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.type.should.equal("application/json");
+                    res.body.should.be.a('object');
+                    res.body.status.should.equal(200);
+                    res.body.data.length.should.equal(1);
+                    res.body.data[0].should.include.keys('id', 'type', 'name');
+                    done();
+                })
+        })
+    })
 })
