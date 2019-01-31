@@ -44,7 +44,7 @@ describe("Offices", () => {
         })
     })
 
-    describe("GET /api/v1/parties/id", () => {
+    describe("GET /api/v1/parties/<id>", () => {
         it('should return the data of the office requested', (done) => {
             chai.request(app)
                 .get("/api/v1/offices/3")

@@ -4,4 +4,5 @@ node_js:
 cache:
   directories:
     - "node-modules"
+after_success: coveralls
     
