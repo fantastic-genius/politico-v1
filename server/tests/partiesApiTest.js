@@ -1,5 +1,5 @@
 import app from '../../index'
-import db from "../db/db"
+import {parties} from "../db/db"
 
 const chai = require("chai")
 const chaiHttp = require("chai-http")
@@ -8,7 +8,6 @@ const chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 
 const should = chai.should();
-const expect = chai.expect;
 
 describe("Parties", () => {
     describe("POST /api/v1/parties", () => {
@@ -43,7 +42,7 @@ describe("Parties", () => {
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(200);
-                    res.body.data.length.should.equal(db.length);
+                    res.body.data.length.should.equal(parties.length);
                     res.body.data[0].should.include.keys('id', 'name', 'logoUrl');
                     done();
                 })
