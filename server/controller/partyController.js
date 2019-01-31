@@ -99,6 +99,20 @@ class PartyController{
 
         
     }
+
+    deleteParty(req, res){
+        const id = parseInt(req.params.id)
+        db.map((party, i) => {
+            if(party.id == id){
+                db.splice(i, 1)
+                const name = party.name;
+                return res.status(200).send({
+                    status: 200,
+                    message: `${name} deleted from list of political parties`
+                })
+            }
+        })
+    }
 }
 
 const partyController = new PartyController();

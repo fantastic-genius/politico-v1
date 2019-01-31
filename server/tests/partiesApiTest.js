@@ -82,4 +82,20 @@ describe("Parties", () => {
                 })
         })
     })
+
+    describe("DELETE /api/v1/parties/id", () => {
+        it("Should return message that about the party deleted and status 200", (done) => {
+            chai.request(app)
+                .delete("/api/v1/parties/2")
+                .end((err, res) => {
+                    should.not.exist(err)
+                    res.status.should.equal(200)
+                    res.type.should.be.equal("application/json")
+                    res.body.should.be.a("object")
+                    res.body.status.should.equal(200)
+                    res.body.message.should.be.a("string")
+                    done()
+                })
+        })
+    })
 })
