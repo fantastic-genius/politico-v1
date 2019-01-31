@@ -1,5 +1,5 @@
 import app from "../../index"
-import offices from "../db/db"
+import {offices} from "../db/db"
 import chai from "chai"
 import chaiHttp from "chai-http"
 
@@ -21,6 +21,23 @@ describe("Offices", () => {
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(201);
+                    res.body.data[0].should.include.keys('id', 'type', 'name');
+                    done();
+                })
+        })
+    })
+
+    describe("GET /api/v1/offices", () => {
+        it('should return all the existing office data', (done) => {
+            chai.request(app)
+                .get("/api/v1/offices")
+                .end((err, res) => {
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.type.should.equal("application/json");
+                    res.body.should.be.a('object');
+                    res.body.status.should.equal(200);
+                    res.body.data.length.should.equal(offices.length);
                     res.body.data[0].should.include.keys('id', 'type', 'name');
                     done();
                 })

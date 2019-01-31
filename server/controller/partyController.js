@@ -5,7 +5,8 @@ class PartyController{
 
         const body = req.body;
         const {name, hqAddress, logoUrl} = body;
-        const id = parties.length + 1;
+        const len = parties.length
+        const id = parties[len-1].id + 1;
         const party = {
             id,
             name,
