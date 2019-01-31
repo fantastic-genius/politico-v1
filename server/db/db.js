@@ -14,4 +14,22 @@ const parties = [
     }
 ]
 
-export default parties;
+const offices = [
+    {
+        id : 1,
+        type: "Federal",
+        name : "President"
+    },
+    {
+        id : 2,
+        type: "State",
+        name : "Governor"
+    },
+    {
+        id : 3,
+        type: "Legislative",
+        name : "Senator"
+    }
+]
+
+export {parties, offices};

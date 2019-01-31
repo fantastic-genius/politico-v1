@@ -1,11 +1,11 @@
-import db from "../db/db"
+import {parties} from "../db/db"
 
 class PartyController{
     createParty(req, res){
 
         const body = req.body;
         const {name, hqAddress, logoUrl} = body;
-        const id = db.length + 1;
+        const id = parties.length + 1;
         const party = {
             id,
             name,
@@ -13,7 +13,7 @@ class PartyController{
             logoUrl
         }
 
-        db.push(party);
+        parties.push(party);
 
         return res.status(201).send({
             status: 201,
@@ -28,7 +28,7 @@ class PartyController{
 
         let data = []
 
-        db.map(party => {
+        parties.map(party => {
             let {id, name, logoUrl} = party
             let cur_data = {
                 id,
@@ -47,8 +47,15 @@ class PartyController{
 
     getAParty(req, res){
         const id = parseInt(req.params.id)
+
+        if(isNaN(id)){
+            return res.status(400).send({
+                status: 400,
+                error: "An integer is required to be passed in"
+            })
+        }
         
-        db.map(party => {
+        parties.map(party => {
             if(party.id === id){
                 const data = [
                     {
@@ -78,7 +85,7 @@ class PartyController{
         const id = parseInt(req.params.id);
         const name = req.params.name;
 
-        db.map(party => {
+        parties.map(party => {
             if(party.id = id){
                 party.name = name;
 
@@ -102,9 +109,9 @@ class PartyController{
 
     deleteParty(req, res){
         const id = parseInt(req.params.id)
-        db.map((party, i) => {
+        parties.map((party, i) => {
             if(party.id == id){
-                db.splice(i, 1)
+                parties.splice(i, 1)
                 const name = party.name;
                 return res.status(200).send({
                     status: 200,

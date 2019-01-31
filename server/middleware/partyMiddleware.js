@@ -1,4 +1,3 @@
-
 class PartyMiddleware{
 
     createPartyMiddleware(req, res, next){
@@ -34,6 +33,11 @@ class PartyMiddleware{
                 status: 400,
                 error: "new party name not provided"
             })
+        }else if(isNaN(parseInt(req.params.id))){
+            return res.status(400).send({
+                status: 400,
+                error: "An integer is required to be passed in"
+            })
         }
 
         next()
@@ -44,6 +48,11 @@ class PartyMiddleware{
             return res.status(400).send({
                 status: 400,
                 error: "Party does not exist"
+            })
+        }else if(isNaN(parseInt(req.params.id))){
+            return res.status(400).send({
+                status: 400,
+                error: "An integer is required to be passed in"
             })
         }
 
