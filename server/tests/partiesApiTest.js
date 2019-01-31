@@ -49,7 +49,7 @@ describe("Parties", () => {
         })
     })
 
-    describe("GET /api/v1/parties/2", () => {
+    describe("GET /api/v1/parties/<id>", () => {
         it('should return the data of the party requested', (done) => {
             chai.request(app)
                 .get("/api/v1/parties/2")
@@ -66,10 +66,10 @@ describe("Parties", () => {
         })
     })
 
-    describe("PATCH /api/v1/parties/id/name", () => {
+    describe("PATCH /api/v1/parties/<id>/name", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
-                .patch("/api/v1/parties/2")
+                .patch("/api/v1/parties/2/name")
                 .send({
                     name: "Labour Party"
                 })
@@ -85,7 +85,7 @@ describe("Parties", () => {
         })
     })
 
-    describe("DELETE /api/v1/parties/id", () => {
+    describe("DELETE /api/v1/parties/<id>", () => {
         it("Should return message that about the party deleted and status 200", (done) => {
             chai.request(app)
                 .delete("/api/v1/parties/2")

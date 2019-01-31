@@ -28,6 +28,39 @@ class OfficeController{
         })
     }
 
+    getAnOffice(req, res){
+        const id = parseInt(req.params.id)
+
+        if(isNaN(id)){
+            return res.status(400).send({
+                status: 400,
+                error: "An integer is required to be passed in"
+            })
+        }
+        
+        offices.map(office => {
+            if(office.id === id){
+                const {id, type, name} = office
+
+                return res.status(200).send({
+                    status: 200,
+                    data: [{
+                        id,
+                        type,
+                        name
+                    }]
+                })
+                
+            }
+
+        })
+
+        return res.status(404).send({
+            status: 404,
+            error: "Office not found"
+        })
+        
+    }
     
 }
 
