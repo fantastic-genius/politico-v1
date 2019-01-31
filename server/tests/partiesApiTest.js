@@ -66,4 +66,20 @@ describe("Parties", () => {
                 })
         })
     })
+
+    describe("PATCH /api/v1/parties/id/name", () => {
+        it("should return the status 200 and the id and new name of the edited party", (done) => {
+            chai.request(app)
+                .patch("/api/v1/parties/2/Labour Party")
+                .end((err, res) => {
+                    should.not.exist(err)
+                    res.status.should.equal(200)
+                    res.type.should.be.equal("application/json")
+                    res.body.should.be.a("object")
+                    res.body.status.should.equal(200)
+                    res.body.data[0].should.include.keys("id", "name")
+                    done()
+                })
+        })
+    })
 })

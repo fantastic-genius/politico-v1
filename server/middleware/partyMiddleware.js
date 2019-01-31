@@ -5,21 +5,38 @@ class PartyMiddleware{
         if(!req.body.name){
             return res.status(400).send({
                 status: 400,
-                message: "Party name not included in the data posted" 
+                error: "Party name not included in the data posted" 
             })
         }else if(!req.body.hqAddress){
             return res.status(400).send({
                 status: 400,
-                message: "Party headquarter not included in the data posted" 
+                error: "Party headquarter not included in the data posted" 
             })
         }else if(!req.body.logoUrl){
             return res.status(400).send({
                 status: 400,
-                message: "Party logo Url not included in the data posted" 
+                error: "Party logo Url not included in the data posted" 
             })
         }
 
         next();
+    }
+
+
+    editPartyMiddleware(req, res, next){
+        if(!req.params.id){
+            return res.status(400).send({
+                status: 400,
+                error: "Party id not provided" 
+            })
+        }else if(!req.params.name){
+            return res.status(400).send({
+                status: 400,
+                error: "new party name not provided"
+            })
+        }
+
+        next()
     }
 
 }
