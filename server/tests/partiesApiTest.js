@@ -69,7 +69,10 @@ describe("Parties", () => {
     describe("PATCH /api/v1/parties/id/name", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
-                .patch("/api/v1/parties/2/Labour Party")
+                .patch("/api/v1/parties/2")
+                .send({
+                    name: "Labour Party"
+                })
                 .end((err, res) => {
                     should.not.exist(err)
                     res.status.should.equal(200)

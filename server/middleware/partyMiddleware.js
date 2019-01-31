@@ -28,7 +28,7 @@ class PartyMiddleware{
                 status: 400,
                 error: "Party id not provided" 
             })
-        }else if(!req.params.name){
+        }else if(!req.body.name){
             return res.status(400).send({
                 status: 400,
                 error: "new party name not provided"

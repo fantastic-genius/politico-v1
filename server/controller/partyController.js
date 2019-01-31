@@ -84,7 +84,7 @@ class PartyController{
 
     editAParty(req, res){
         const param_id = parseInt(req.params.id);
-        const param_name = req.params.name;
+        const param_name = req.body.name;
 
         parties.map(party => {
             if(party.id === param_id){
