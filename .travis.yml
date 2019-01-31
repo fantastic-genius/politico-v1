@@ -4,5 +4,6 @@ node_js:
 cache:
   directories:
     - "node-modules"
-after_success: coveralls
+after_success: 
+  - npm run coverage
     
