@@ -16,8 +16,18 @@ class CandidatesModel{
         
     }
 
-    async selectACandidate(idval){
+    async selectACandidate(candidateVal){
         const query = 'SELECT * FROM candidates WHERE candidate=$1'
+        try {
+            const {rows}  = await pool.query(query, candidateVal)
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async selectCandidateById(idval){
+        const query = 'SELECT * FROM candidates WHERE id=$1'
         try {
             const {rows}  = await pool.query(query, idval)
             return rows
