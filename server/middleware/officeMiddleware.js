@@ -60,6 +60,11 @@ class OfficeMiddleware{
                 status: 400,
                 error: "Integer required but String was passed as office"
             })
+        }else if(isNaN(parseInt(req.params.id))){
+            return res.status(400).send({
+                status: 400,
+                error: "Integer required but String was passed as user id"
+            })
         }
 
         const promis = usersModel.selectUserById([req.params.id])
