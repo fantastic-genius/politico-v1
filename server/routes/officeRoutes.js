@@ -8,5 +8,6 @@ const router = express.Router()
 router.post(officeVersionedApi, officeMiddleware.createOfficeMiddleware, officeController.createOffice)
 router.get(officeVersionedApi, officeController.getAllOffice)
 router.get(`${officeVersionedApi}:id`, officeController.getAnOffice)
+router.post(`${officeVersionedApi}:id/register`, officeMiddleware.createCandidateMiddleware, officeController.createCandidate)
 
 export default router;

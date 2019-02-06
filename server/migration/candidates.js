@@ -1,11 +1,4 @@
-import {Pool} from "pg"
-import dotenv from "dotenv"
-
-dotenv.config()
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
+import pool from "../config"
 
 pool.on('connect', () => {
     console.log("Connected to the database")
@@ -20,7 +13,7 @@ const createCandidatesTable = () => {
             candidate INT NOT NULL,
             FOREIGN KEY (office) REFERENCES offices (id) ON DELETE CASCADE,
             FOREIGN KEY (party) REFERENCES parties (id) ON DELETE CASCADE,
-            FOREIGN KEY (candidate) REFERENCES candidates (id) ON DELETE CASCADE
+            FOREIGN KEY (candidate) REFERENCES users (id) ON DELETE CASCADE
             )`
 
     pool.query(queryText)

@@ -1,12 +1,4 @@
-import {Pool} from "pg"
-import dotenv from "dotenv"
-
-dotenv.config()
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
-
+import pool from "../config"
 class UsersModel{
     async createUser(values){
         const query = `INSERT INTO 
@@ -36,6 +28,18 @@ class UsersModel{
         
     }
 
+    async selectUserById(idval){
+        const query = 'SELECT * FROM users WHERE id=$1'
+
+        try {
+            const {rows} = await pool.query(query, idval)
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
     async selectAUser(value){
         const query = 'SELECT * FROM users WHERE email=$1'
 
@@ -47,6 +51,8 @@ class UsersModel{
         }
         
     }
+
+
 }
 
 const usersModel = new UsersModel()

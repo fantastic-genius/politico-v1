@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 import usersModel from "../model/usersModel"
 import bcrypt from "bcryptjs"
-
 class AuthController{
     signup(req, res){
         const {firstname, lastname, othername, email, phoneNumber} = req.body;
@@ -10,13 +9,15 @@ class AuthController{
         const isAdmin = false
         const values = [firstname, lastname, othername, email, password, phoneNumber, isAdmin]
 
-        const promis = usersModel.createUser(values)
-        promis.then(rows => {
+        const user = usersModel.createUser(values)
+        user.then(rows => {
             if(rows){
                 const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                     process.env.SECRET,
                     {expiresIn: '12h'})
-        
+                    
+                delete rows[0].password
+
                 return res.status(201).send({
                     status: 201,
                     data:[{
@@ -42,23 +43,28 @@ class AuthController{
     login(req, res){
         const {email} = req.body;
         const unhashed_pass = req.body.password
-        const password = bcrypt.hashSync(unhashed_pass, bcrypt.genSaltSync(8))
-
         const value = [email]
-        const promis = usersModel.selectAUser(value)
-        promis.then(rows => {
+        const user = usersModel.selectAUser(value)
+        user.then(rows => {
             if(rows){
                 if(bcrypt.compareSync(unhashed_pass, rows[0].password)){
                     const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                         process.env.SECRET,
                         {expiresIn: '12h'})
-            
+                        
+                    delete rows[0].password
+
                     return res.status(200).send({
                         status: 200,
                         data:[{
                             token,
                             user: rows[0]
                         }]
+                    })
+                }else{
+                    return res.status(412).send({
+                        status: 412,
+                        error: "Password Incorrect"
                     })
                 }
             }else{

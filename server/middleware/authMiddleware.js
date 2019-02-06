@@ -69,12 +69,7 @@ class AuthMiddleware{
                 return next()
             }).catch(error => {
                 console.log(error)
-            })
-
-        // if(emailExist === false){
-        //     next()
-        // }
-        
+            })        
     }
 
     loginMiddleware(req, res, next){
