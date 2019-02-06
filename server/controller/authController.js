@@ -11,7 +11,7 @@ class AuthController{
 
         const user = usersModel.createUser(values)
         user.then(rows => {
-            if(rows){
+            if(rows.length > 0){
                 const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                     process.env.SECRET,
                     {expiresIn: '12h'})
@@ -46,7 +46,7 @@ class AuthController{
         const value = [email]
         const user = usersModel.selectAUser(value)
         user.then(rows => {
-            if(rows){
+            if(rows.length > 0){
                 if(bcrypt.compareSync(unhashed_pass, rows[0].password)){
                     const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                         process.env.SECRET,
@@ -74,9 +74,9 @@ class AuthController{
                 })
             }
         }).catch(error => {
-            return res.status(400).send({
-                status: 400,
-                error: "No such account exist"
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
             })
         })
     }

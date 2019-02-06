@@ -55,7 +55,6 @@ class AuthMiddleware{
             })
         }
 
-        let emailExist = false
         const prom = usersModel.selectAllUsers()
         prom.then(rows => {
                 rows.map(row => {

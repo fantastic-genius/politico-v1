@@ -68,13 +68,18 @@ class OfficeController{
         const values = [office, party, user_id]
         const promis = candidatesModel.createCandidate(values)
         promis.then(rows => {
-            if(rows){
+            if(rows.length > 0){
                 return res.status(201).send({
                     status: 201,
                     data: {
                         office: rows[0].office,
                         user: rows[0].candidate
                     }
+                })
+            }else{
+                return res.status(500).send({
+                    status: 500,
+                    error: "Something went wrong, cannot process your request. Pleae try again"
                 })
             }
         })
