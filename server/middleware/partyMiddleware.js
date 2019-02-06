@@ -88,7 +88,7 @@ class PartyMiddleware{
         if(!req.params.id){
             return res.status(400).send({
                 status: 400,
-                error: "Party does not exist"
+                error: "Party not provided"
             })
         }else if(isNaN(parseInt(req.params.id))){
             return res.status(400).send({

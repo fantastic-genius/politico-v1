@@ -1,4 +1,7 @@
 import {offices} from "../db/db"
+import usersModel from "../model/usersModel"
+import officesModel from "../model/officesModel"
+import partiesModel from "../model/partiesModel"
 class OfficeMiddleware{
     createOfficeMiddleware(req, res, next){
         if(!req.body.type || !(req.body.type).trim()){
@@ -33,6 +36,52 @@ class OfficeMiddleware{
         })
 
         next();
+    }
+
+    createCandidateMiddleware(req, res, next){
+        if(!req.body.office){
+            return res.status(400).send({
+                status: 400,
+                error: "Political office not provided"
+            })
+        }else if(!req.body.party){
+            return res.status(400).send({
+                status: 400,
+                error: "Political party not provided"
+            })
+        }
+
+        const promis = usersModel.selectUserById([req.params.id])
+        promis.then(rows => {
+            if(rows == null){
+                return res.status(404).send({
+                    status: 404,
+                    error: "User does not exist"
+                })
+            }else{
+                const office = officesModel.selecAnOffice(req.body.office)
+                office.then(rows => {
+                    if(!rows){
+                        return res.status(404).send({
+                            status: 404,
+                            error: "Political office does not exist"
+                        })
+                    }else{
+                        const party = partiesModel.selecAParty(req.body.party)
+                        party.then(rows => {
+                            if(!rows){
+                                return res.status(404).send({
+                                    status: 404,
+                                    error: "Political party does not exist"
+                                })
+                            }else{
+                                next()
+                            }
+                        })
+                    }
+                }) 
+            }
+        })
     }
 }
 const officeMiddleware = new OfficeMiddleware()

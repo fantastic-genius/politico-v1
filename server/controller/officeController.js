@@ -1,5 +1,5 @@
 import {offices} from "../db/db"
-
+import candidatesModel from "../model/candidatesModel"
 class OfficeController{
     createOffice(req, res){
         const body = req.body
@@ -60,6 +60,23 @@ class OfficeController{
             error: "Office not found"
         })
         
+    }
+
+    createCandidate(req, res){
+        const values = [req.params.id]
+        const promis = candidatesModel.createCandidate(values)
+        promis.then(rows => {
+            if(rows){
+                return res.status(201).send({
+                    status: 201,
+                    data: {
+                        office: rows[0].office,
+                        user: rows[0].candidate
+                    }
+                })
+            }
+        })
+
     }
     
 }

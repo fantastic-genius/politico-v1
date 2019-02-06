@@ -36,17 +36,19 @@ class UsersModel{
         
     }
 
-    async selectAUser(value){
-        const query = 'SELECT * FROM users WHERE email=$1'
+    async selectUserById(idval){
+        const query = 'SELECT * FROM users WHERE id=$1'
 
         try {
-            const {rows} = await pool.query(query, value)
+            const {rows} = await pool.query(query, idval)
             return rows
         } catch (error) {
             console.log(error)
         }
         
     }
+
+
 }
 
 const usersModel = new UsersModel()
