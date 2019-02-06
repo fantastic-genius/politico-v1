@@ -58,23 +58,49 @@ class AuthMiddleware{
         let emailExist = false
         const prom = usersModel.selectAllUsers()
         prom.then(rows => {
-            rows.map(row => {
-                if(row.email == req.body.email){
-                    emailExist = true
-                    return res.status(400).send({
-                        status: 400,
-                        error: "Email provided already exist" 
-                    })
-                }
+                rows.map(row => {
+                    if(row.email == req.body.email){
+                        return res.status(400).send({
+                            status: 400,
+                            error: "Email provided already exist" 
+                        })
+                    }
+                })
+                return next()
+            }).catch(error => {
+                console.log(error)
             })
-        }).catch(error => {
-            console.log(error)
-        })
 
-        if(!emailExist){
-            next()
-        }
+        // if(emailExist === false){
+        //     next()
+        // }
         
+    }
+
+    loginMiddleware(req, res, next){
+        if(!req.body.email || !(req.body.email).trim()){
+            return res.status(400).send({
+                status: 400,
+                error: "Email not provided"
+            })
+        }else if(!req.body.password || !(req.body.password).trim()){
+            return  res.status(400).send({
+                status: 400,
+                error: "Password not provided"
+            })
+        }else if(!isNaN(Number(req.body.email))){
+            return res.status(400).send({
+                status: 400,
+                error: "Email contains an integer instead of a string" 
+            })
+        }else if(!Helper.isValidEmail(req.body.email)){
+            return res.status(400).send({
+                status: 400,
+                error: "Email provided not a vaild email" 
+            })
+        }
+
+        next()
     }
 }
 
