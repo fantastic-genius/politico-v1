@@ -50,7 +50,6 @@ class AuthController{
         const promis = usersModel.selectAUser(value)
         promis.then(rows => {
             if(rows){
-                console.log(bcrypt.compareSync(unhashed_pass, rows[0].password))
                 if(bcrypt.compareSync(unhashed_pass, rows[0].password)){
                     const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                         process.env.SECRET,
