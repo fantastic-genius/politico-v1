@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 import usersModel from "../model/usersModel"
 import bcrypt from "bcryptjs"
-
 class AuthController{
     signup(req, res){
         const {firstname, lastname, othername, email, phoneNumber} = req.body;
@@ -44,11 +43,9 @@ class AuthController{
     login(req, res){
         const {email} = req.body;
         const unhashed_pass = req.body.password
-        const password = bcrypt.hashSync(unhashed_pass, bcrypt.genSaltSync(8))
-
         const value = [email]
-        const promis = usersModel.selectAUser(value)
-        promis.then(rows => {
+        const user = usersModel.selectAUser(value)
+        user.then(rows => {
             if(rows){
                 if(bcrypt.compareSync(unhashed_pass, rows[0].password)){
                     const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
