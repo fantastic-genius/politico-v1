@@ -50,6 +50,16 @@ class OfficeMiddleware{
                 status: 400,
                 error: "Political party not provided"
             })
+        }else if(isNaN(parseInt(req.body.office))){
+            return res.status(400).send({
+                status: 400,
+                error: "Integer required but String was passed as office"
+            })
+        }else if(isNaN(parseInt(req.body.party))){
+            return res.status(400).send({
+                status: 400,
+                error: "Integer required but String was passed as office"
+            })
         }
 
         const promis = usersModel.selectUserById([req.params.id])
