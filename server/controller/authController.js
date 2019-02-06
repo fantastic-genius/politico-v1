@@ -9,8 +9,8 @@ class AuthController{
         const isAdmin = false
         const values = [firstname, lastname, othername, email, password, phoneNumber, isAdmin]
 
-        const promis = usersModel.createUser(values)
-        promis.then(rows => {
+        const user = usersModel.createUser(values)
+        user.then(rows => {
             if(rows){
                 const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
                     process.env.SECRET,
