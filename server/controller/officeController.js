@@ -63,7 +63,9 @@ class OfficeController{
     }
 
     createCandidate(req, res){
-        const values = [req.params.id]
+        const {office, party} = req.body
+        const user_id = req.params.id
+        const values = [office, party, user_id]
         const promis = candidatesModel.createCandidate(values)
         promis.then(rows => {
             if(rows){

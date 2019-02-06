@@ -2,6 +2,7 @@ import {offices} from "../db/db"
 import usersModel from "../model/usersModel"
 import officesModel from "../model/officesModel"
 import partiesModel from "../model/partiesModel"
+import candidatesModel from "../model/candidatesModel"
 class OfficeMiddleware{
     createOfficeMiddleware(req, res, next){
         if(!req.body.type || !(req.body.type).trim()){
@@ -53,36 +54,48 @@ class OfficeMiddleware{
 
         const promis = usersModel.selectUserById([req.params.id])
         promis.then(rows => {
-            if(rows == null){
+            if(rows.length === 0){
                 return res.status(404).send({
                     status: 404,
                     error: "User does not exist"
                 })
             }else{
-                const office = officesModel.selecAnOffice(req.body.office)
-                office.then(rows => {
-                    if(!rows){
-                        return res.status(404).send({
-                            status: 404,
-                            error: "Political office does not exist"
+                const candidate = candidatesModel.selectACandidate([req.params.id])
+                
+                candidate.then(rows => {
+                    if(rows.length > 0){
+                        return res.status(403).send({
+                            status: 403,
+                            error: "You have already applied. You are not allowed to show interest for an office or more twice"
                         })
                     }else{
-                        const party = partiesModel.selecAParty(req.body.party)
-                        party.then(rows => {
-                            if(!rows){
+                        const office = officesModel.selectAnOffice([req.body.office])
+                        office.then(rows => {
+                            if(rows.length === 0){
                                 return res.status(404).send({
                                     status: 404,
-                                    error: "Political party does not exist"
+                                    error: "Political office does not exist"
                                 })
                             }else{
-                                next()
+                                const party = partiesModel.selectAParty([req.body.party])
+                                party.then(rows => {
+                                    if(rows.length === 0){
+                                        return res.status(404).send({
+                                            status: 404,
+                                            error: "Political party does not exist"
+                                        })
+                                    }else{
+                                        next()
+                                    }
+                                })
                             }
-                        })
+                        }) 
                     }
-                }) 
+                })
             }
         })
     }
 }
+
 const officeMiddleware = new OfficeMiddleware()
 export default officeMiddleware

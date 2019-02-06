@@ -1,11 +1,4 @@
-import {Pool} from "pg"
-import dotenv from "dotenv"
-
-dotenv.config()
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
-})
+import pool from "../config"
 
 class CandidatesModel{
 
@@ -18,12 +11,19 @@ class CandidatesModel{
             const {rows}  = await pool.query(query, values)
             return rows
         } catch (error) {
-            return res.status(500).send({
-                status: 500,
-                error: "Something went wrong, cannot process your request. Pleae try again"
-            })
+            console.log(error)
         }
         
+    }
+
+    async selectACandidate(idval){
+        const query = 'SELECT * FROM candidates WHERE candidate=$1'
+        try {
+            const {rows}  = await pool.query(query, idval)
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
 
