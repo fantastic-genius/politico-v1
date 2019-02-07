@@ -1,19 +1,23 @@
 import app from '../../index'
-import {parties} from "../db/db"
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const chai = require("chai")
 const chaiHttp = require("chai-http")
-
-
 chai.use(chaiHttp)
-
 const should = chai.should();
+const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
+                    process.env.SECRET,
+                    {expiresIn: '12h'})
 
 describe("Parties", () => {
     describe("POST /api/v1/parties", () => {
         it('should return newly created party data', (done) => {
             chai.request(app)
                 .post("/api/v1/parties")
+                .set("x-access-token", token)
                 .send({
                     name : "Alliance Democracy Progressive",
                     hqAddress : "Wuse rd, Abuja",
@@ -36,6 +40,7 @@ describe("Parties", () => {
         it('should return all the existing party data', (done) => {
             chai.request(app)
                 .get("/api/v1/parties")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
@@ -52,6 +57,7 @@ describe("Parties", () => {
         it('should return the data of the party requested', (done) => {
             chai.request(app)
                 .get("/api/v1/parties/1")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
@@ -68,6 +74,7 @@ describe("Parties", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
                 .patch("/api/v1/parties/3/name")
+                .set("x-access-token", token)
                 .send({
                     name: "All Progressive Party"
                 })
@@ -87,6 +94,7 @@ describe("Parties", () => {
         it("Should return message that about the party deleted and status 200", (done) => {
             chai.request(app)
                 .delete("/api/v1/parties/2")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err)
                     res.status.should.equal(200)

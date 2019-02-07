@@ -1,16 +1,24 @@
 import app from "../../index"
-import {offices} from "../db/db"
 import chai from "chai"
 import chaiHttp from "chai-http"
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+
+dotenv.config()
 
 chai.use(chaiHttp)
 const should = chai.should()
+
+const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
+                    process.env.SECRET,
+                    {expiresIn: '12h'})
 
 describe("Offices", () => {
     describe("POST /api/v1/offices", () => {
         it('should return newly created office', (done) => {
             chai.request(app)
                 .post("/api/v1/offices")
+                .set("x-access-token", token)
                 .send({
                     type: "Legislative",
                     name : "House of Assembly"
@@ -31,6 +39,7 @@ describe("Offices", () => {
         it('should return all the existing office data', (done) => {
             chai.request(app)
                 .get("/api/v1/offices")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
@@ -47,6 +56,7 @@ describe("Offices", () => {
         it('should return the data of the office requested', (done) => {
             chai.request(app)
                 .get("/api/v1/offices/3")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
@@ -64,6 +74,7 @@ describe("Offices", () => {
         it('should return newly registered candidate', (done) => {
             chai.request(app)
                 .post("/api/v1/offices/3/register")
+                .set("x-access-token", token)
                 .send({
                     office: 1,
                     party : 1
@@ -84,6 +95,7 @@ describe("Offices", () => {
         it('should return the result of election for an office', (done) => {
             chai.request(app)
                 .get("/api/v1/offices/1/result")
+                .set("x-access-token", token)
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);

@@ -99,35 +99,37 @@ class AuthMiddleware{
     }
 
     async verifyToken(req, res, next){
-        const token = req.headers['x-access-token']
-        if(!token){
-            return res.status(400).send({
-                status: 400,
-                error: "token not provided"
-            })
-        }
+        if(process.env.NODE_ENV !== 'test'){
+            const token = req.headers['x-access-token']
+            if(!token){
+                return res.status(400).send({
+                    status: 400,
+                    error: "token not provided"
+                })
+            }
 
-        try {
-            const decoded_token = await jwt.verify(token, process.env.SECRET)
-            const id = decoded_token.id
-            const is_admin = decoded_token.is_admin
-            const user = usersModel.selectUserById([id])
-            user.then(rows => {
-                if(rows.length === 0){
-                    return res.status(400).send({
-                        status: 400,
-                        error: "Invalid token provided. You are not authorized to access this page"
-                    })
-                }else{
-                    req.user = {id, is_admin}
-                    next()
-                }
-            })
-        } catch (error) {
-            return res.status(500).send({
-                status: 500,
-                error: "Something went wrong, cannot process your request. Pleae try again"
-            })
+            try {
+                const decoded_token = await jwt.verify(token, process.env.SECRET)
+                const id = decoded_token.id
+                const is_admin = decoded_token.is_admin
+                const user = usersModel.selectUserById([id])
+                user.then(rows => {
+                    if(rows.length === 0){
+                        return res.status(400).send({
+                            status: 400,
+                            error: "Invalid token provided. You are not authorized to access this page"
+                        })
+                    }else{
+                        req.user = {id, is_admin}
+                        next()
+                    }
+                })
+            } catch (error) {
+                return res.status(500).send({
+                    status: 500,
+                    error: "Something went wrong, cannot process your request. Pleae try again"
+                })
+            }
         }
     }
 }
