@@ -6,43 +6,73 @@ class OfficeController{
     createOffice(req, res){
         const body = req.body
         const {type, name} = body
-        const len = offices.length
-        const id = offices[len-1].id + 1;
-        const office = {
-            id,
-            type,
-            name
-        }
+        const values = [type, name]
+        const office = officesModel.createOffice(values)
 
-        offices.push(office)
+        office.then(rows => {
+            if(rows.length > 0){
+                const {id, type, name} = rows[0]
+                const data = [{
+                    id,
+                    type,
+                    name
+                }]
 
-        return res.status(201).send({
-            status: 201,
-            data: [office]
-        })
+                return res.status(201).send({
+                    status: 201,
+                    data
+                })
+            }else{
+                return res.status(500).send({
+                    status: 500,
+                    error: "Something went wrong, cannot process your request. Pleae try again"
+                })
+            }
+        }).catch(error => {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
+        })    
     }
 
-    getAllOffice(req, res){      
-
-        return res.status(200).send({
-            status: 200,
-            data: offices
-        })
+    getAllOffice(req, res){
+        
+        const offices = officesModel.selectAllOffice()
+        offices.then(rows => {
+            if(rows.length > 0){
+                return res.status(200).send({
+                    status: 200,
+                    data: rows
+                })
+            }else{
+                return res.status(404).send({
+                    status: 404,
+                    error: "No entry for parties yet"
+                })
+            }
+        }).catch(error => {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
+        }) 
     }
 
     getAnOffice(req, res){
-        const id = parseInt(req.params.id)
+        const office_id = parseInt(req.params.id)
 
-        if(isNaN(id)){
+        if(isNaN(office_id)){
             return res.status(400).send({
                 status: 400,
                 error: "An integer is required to be passed in"
             })
         }
-        
-        offices.map(office => {
-            if(office.id === id){
-                const {id, type, name} = office
+
+        const office = officesModel.selectAnOffice([office_id])
+        office.then(rows => {
+            if(rows.length > 0){
+                const {id, type, name} = rows[0]
 
                 return res.status(200).send({
                     status: 200,
@@ -52,16 +82,18 @@ class OfficeController{
                         name
                     }]
                 })
-                
+            }else{
+                return res.status(404).send({
+                    status: 404,
+                    error: "Office not found"
+                })
             }
-
-        })
-
-        return res.status(404).send({
-            status: 404,
-            error: "Office not found"
-        })
-        
+        }).catch(error => {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
+        })   
     }
 
     createCandidate(req, res){
@@ -73,10 +105,10 @@ class OfficeController{
             if(rows.length > 0){
                 return res.status(201).send({
                     status: 201,
-                    data: {
+                    data: [{
                         office: rows[0].office,
                         user: rows[0].candidate
-                    }
+                    }]
                 })
             }else{
                 return res.status(500).send({

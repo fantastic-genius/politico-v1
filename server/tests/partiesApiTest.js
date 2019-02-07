@@ -15,7 +15,7 @@ describe("Parties", () => {
             chai.request(app)
                 .post("/api/v1/parties")
                 .send({
-                    name : "Alliance for Democracy",
+                    name : "Alliance Democracy Progressive",
                     hqAddress : "Wuse rd, Abuja",
                     logoUrl : "http://ad.com/logo",
                 })
@@ -42,7 +42,6 @@ describe("Parties", () => {
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(200);
-                    res.body.data.length.should.equal(parties.length);
                     res.body.data[0].should.include.keys('id', 'name', 'logoUrl');
                     done();
                 })
@@ -52,14 +51,13 @@ describe("Parties", () => {
     describe("GET /api/v1/parties/<id>", () => {
         it('should return the data of the party requested', (done) => {
             chai.request(app)
-                .get("/api/v1/parties/2")
+                .get("/api/v1/parties/1")
                 .end((err, res) => {
                     should.not.exist(err);
                     res.status.should.equal(200);
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(200);
-                    res.body.data.length.should.equal(1);
                     res.body.data[0].should.include.keys('id', 'name', 'logoUrl');
                     done();
                 })
@@ -69,9 +67,9 @@ describe("Parties", () => {
     describe("PATCH /api/v1/parties/<id>/name", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
-                .patch("/api/v1/parties/2/name")
+                .patch("/api/v1/parties/3/name")
                 .send({
-                    name: "Labour Party"
+                    name: "All Progressive Party"
                 })
                 .end((err, res) => {
                     should.not.exist(err)

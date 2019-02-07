@@ -5,7 +5,12 @@ import partiesModel from "../model/partiesModel"
 import candidatesModel from "../model/candidatesModel"
 class OfficeMiddleware{
     createOfficeMiddleware(req, res, next){
-        if(!req.body.type || !(req.body.type).trim()){
+        if(!req.user || req.user.is_admin === false){
+            return res.status(401).send({
+                status: 401,
+                error: "You are not authorized to access this page" 
+            })
+        }else if(!req.body.type || !(req.body.type).trim()){
             return res.status(400).send({
                 status: 400,
                 error: "Office type not included in the data posted" 
@@ -27,20 +32,28 @@ class OfficeMiddleware{
             })
         }
 
-        offices.map(office => {
-            if(office.name === req.body.name){
-                return res.status(412).send({
-                    status: 412,
-                    error: `${req.body.name} already existed` 
-                })
-            }
-        })
+        const offices = officesModel.selectAllOffice()
+        offices.then(rows => {
+            rows.map(row => {
+                if((row.name).toLowerCase() == (req.body.name).toLowerCase()){
+                    return res.status(409).send({
+                        status: 409,
+                        error: `${req.body.name} already existed` 
+                    })
+                }
+            })
 
-        next();
+            next(); 
+        })
     }
 
     createCandidateMiddleware(req, res, next){
-        if(!req.body.office){
+        if(req.user.is_admin === false){
+            return res.status(401).send({
+                status: 401,
+                error: "You are not authorized to access this page" 
+            })
+        }else if(!req.body.office){
             return res.status(400).send({
                 status: 400,
                 error: "Political office not provided"

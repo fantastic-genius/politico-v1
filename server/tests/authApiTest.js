@@ -14,7 +14,7 @@ describe("Auth", () => {
                     firstname: 'John',
                     lastname: 'Doe',
                     othername: '',
-                    email: 'user@example.com',
+                    email: 'user@politico.com',
                     password: 'password',
                     phoneNumber: '08012345678'
                 })
@@ -35,7 +35,7 @@ describe("Auth", () => {
             chai.request(app)
                 .post("/api/v1/auth/login")
                 .send({
-                    email: 'user@example.com',
+                    email: 'user@politico.com',
                     password: 'password'
                 })
                 .end((err, res) => {
