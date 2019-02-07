@@ -12,9 +12,9 @@ describe("Votes", () => {
             chai.request(app)
                 .post("/api/v1/votes")
                 .send({
+                    createdBy: 65,
                     office: 1,
-                    candidate: 1,
-                    createdBy: 65
+                    candidate: 1
                 })
                 .end((err, res) => {
                     should.not.exist(err);

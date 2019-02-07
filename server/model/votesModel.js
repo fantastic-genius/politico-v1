@@ -25,6 +25,17 @@ class VotesModel{
             console.log(error)
         }
     }
+
+    async getVotesByOffice(officeVal){
+        const query = 'SELECT * FROM votes WHERE office=$1'
+
+        try {
+            const  {rows} = await pool.query(query, officeVal)
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 const votesModel = new VotesModel()

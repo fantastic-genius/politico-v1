@@ -47,7 +47,7 @@ class VoteMiddleWare{
                 const user = usersModel.selectUserById([req.body.createdBy])
                 user.then(rows => {
                     if(rows.length === 0){
-                        return res.status(403).send({
+                        return res.status(404).send({
                             status: 404,
                             error: "This user doesn't exist"
                         })
@@ -55,7 +55,7 @@ class VoteMiddleWare{
                         const office = officesModel.selectAnOffice([req.body.office])
                         office.then(rows => {
                             if(rows.length === 0){
-                                return res.status(403).send({
+                                return res.status(404).send({
                                     status: 404,
                                     error: "This office doesn't exist"
                                 })
@@ -63,7 +63,7 @@ class VoteMiddleWare{
                                  const candidate = candidatesModel.selectCandidateById([req.body.candidate])
                                  candidate.then(rows => {
                                     if(rows.length === 0){
-                                        return res.status(403).send({
+                                        return res.status(404).send({
                                             status: 404,
                                             error: "This candidate doesn't exist"
                                         })
