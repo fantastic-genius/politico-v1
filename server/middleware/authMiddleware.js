@@ -1,5 +1,6 @@
 import Helper from "../helper/helper"
 import usersModel from "../model/usersModel"
+import jwt from "jsonwebtoken"
 
 class AuthMiddleware{
     signupMiddleware(req, res, next){
@@ -95,6 +96,38 @@ class AuthMiddleware{
         }
 
         next()
+    }
+
+    async verifyToken(req, res, next){
+        const token = req.headers['x-access-token']
+        if(!token){
+            return res.status(400).send({
+                status: 400,
+                error: "token not provided"
+            })
+        }
+
+        try {
+            const decoded_token = jwt.verify(token, process.env.SECRET)
+            const user_id = decoded_token.id
+            const user = usersModel.selectUserById([user_id])
+            user.then(rows => {
+                if(rows.length === 0){
+                    return res.status(400).send({
+                        status: 400,
+                        error: "Invalid token provided"
+                    })
+                }else{
+                    req.user = {id: user_id}
+                    next()
+                }
+            })
+        } catch (error) {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
+        }
     }
 }
 

@@ -4,7 +4,8 @@ import candidatesModel from "../model/candidatesModel"
 import votesModel from "../model/votesModel"
 class VoteMiddleWare{
     createVoteMiddleware(req, res, next){
-        if(!req.body.createdBy || !(req.body.createdBy).trim()){
+
+        if(!req.user.id){
             return res.status(400).send({
                 status: 400,
                 error: "User not provided"
@@ -19,7 +20,7 @@ class VoteMiddleWare{
                 status: 400,
                 error: "Candidate not provided"
             })
-        }else if(isNaN(parseInt(req.body.createdBy))){
+        }else if(isNaN(parseInt(req.user.id))){
             return res.status(400).send({
                 status: 400,
                 error: "User Id should be an integer, not a string"
@@ -36,7 +37,7 @@ class VoteMiddleWare{
             })
         }
 
-        const vote = votesModel.selectAVote([req.body.createdBy, req.body.office])
+        const vote = votesModel.selectAVote([req.user.id, req.body.office])
         vote.then(rows => {
             if(rows.length > 0){
                 return res.status(403).send({
@@ -44,7 +45,7 @@ class VoteMiddleWare{
                     error: "You can't vote for this office again. You have already voted for this political office"
                 })
             }else{
-                const user = usersModel.selectUserById([req.body.createdBy])
+                const user = usersModel.selectUserById([req.user.id])
                 user.then(rows => {
                     if(rows.length === 0){
                         return res.status(404).send({

@@ -13,7 +13,14 @@
     "candidates": "babel-node ./server/migration/candidates.js createCandidatesTable",
     "votes": "babel-node ./server/migration/votes.js createVotesTable",
     "petitions": "babel-node ./server/migration/petitions.js createPetitionsTable",
-    "migrate": "npm run users && npm run  parties && npm run offices && npm run  candidates && npm run  votes && npm run  petitions"
+    "dropusers": "babel-node ./server/migration/users.js dropUsersTable",
+    "dropparties": "babel-node ./server/migration/parties.js dropPartiesTable",
+    "dropoffices": "babel-node ./server/migration/offices.js dropOfficesTable",
+    "dropcandidates": "babel-node ./server/migration/candidates.js dropCandidatesTable",
+    "dropvotes": "babel-node ./server/migration/votes.js dropVotesTable",
+    "droppetitions": "babel-node ./server/migration/petitions.js dropPetitionsTable",
+    "migrate": "npm run users && npm run  parties && npm run offices && npm run  candidates && npm run  votes && npm run  petitions",
+    "drop": "npm run dropusers && npm run  dropparties && npm run dropoffices && npm run  dropcandidates && npm run  dropvotes && npm run  droppetitions"
   },
   "repository": {
     "type": "git",
