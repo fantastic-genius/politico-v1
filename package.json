@@ -20,7 +20,7 @@
     "dropvotes": "babel-node ./server/migration/votes.js dropVotesTable",
     "droppetitions": "babel-node ./server/migration/petitions.js dropPetitionsTable",
     "migrate": "npm run users && npm run  parties && npm run offices && npm run  candidates && npm run  votes && npm run  petitions",
-    "drop": "npm run dropusers && npm run  dropparties && npm run dropoffices && npm run  dropcandidates && npm run  dropvotes && npm run  droppetitions"
+    "drop": "npm run  droppetitions && npm run  dropvotes && npm run  dropcandidates && npm run dropoffices && npm run  dropparties && npm run dropusers"
   },
   "repository": {
     "type": "git",

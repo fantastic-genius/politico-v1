@@ -30,7 +30,7 @@ const createVotesTable = () => {
 }
 
 const dropVotesTable = () => {
-    const queryText = 'DROP TABLE IF EXISTS votes returning'
+    const queryText = 'DROP TABLE IF EXISTS votes'
 
     pool.query(queryText)
         .then(res => {
