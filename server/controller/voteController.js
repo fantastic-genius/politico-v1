@@ -2,8 +2,8 @@ import votesModel from "../model/votesModel"
 
 class VoteController{
     createVote(req, res){
-        const {createdBy, office, candidate} = req.body
-        const values = [createdBy, office, candidate]
+        const {office, candidate} = req.body
+        const values = [req.user.id, office, candidate]
         const vote = votesModel.createVote(values)
         vote.then(rows => {
             if(rows.length > 0){
