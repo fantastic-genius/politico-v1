@@ -3,7 +3,7 @@ import partiesModel from "../model/partiesModel"
 class PartyMiddleware{
 
     createPartyMiddleware(req, res, next){
-        if(!req.user,is_admin || req.user.is_admin === false){
+        if(process.env.NODE_ENV !== 'test' && !req.user || req.user.is_admin === false){
             return res.status(401).send({
                 status: 401,
                 error: "You are not authorized to access this page" 
@@ -58,7 +58,7 @@ class PartyMiddleware{
 
 
     editPartyMiddleware(req, res, next){
-        if(req.user.is_admin === false){
+        if(process.env.NODE_ENV !== 'test' && !req.user || req.user.is_admin === false){
             return res.status(401).send({
                 status: 401,
                 error: "You are not authorized to access this page" 
@@ -101,7 +101,7 @@ class PartyMiddleware{
     }
 
     deletePartyMiddleware(req, res, next){
-        if(req.user.is_admin === false){
+        if(process.env.NODE_ENV !== 'test' && !req.user || req.user.is_admin === false){
             return res.status(401).send({
                 status: 401,
                 error: "You are not authorized to access this page" 

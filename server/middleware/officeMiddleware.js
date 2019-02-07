@@ -5,7 +5,7 @@ import partiesModel from "../model/partiesModel"
 import candidatesModel from "../model/candidatesModel"
 class OfficeMiddleware{
     createOfficeMiddleware(req, res, next){
-        if(!req.user || req.user.is_admin === false){
+        if(process.env.NODE_ENV !== 'test' && !req.user || req.user.is_admin === false){
             return res.status(401).send({
                 status: 401,
                 error: "You are not authorized to access this page" 

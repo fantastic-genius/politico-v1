@@ -19,7 +19,7 @@ app.use(voteRouter)
 
 if(!module.parent){
     app.listen(process.env.PORT || PORT, () => {
-        console.log(`App listening on port ${PORT}`);
+        debugg(`App listening on port ${PORT}`);
     });
 }
 
