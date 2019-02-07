@@ -110,6 +110,22 @@ class OfficeMiddleware{
             }
         })
     }
+
+    getOfficeVotesMiddleware(req, res, next){
+        if(!req.params.id){
+            return res.status(400).send({
+                status: 400,
+                error: "Office Id not provided"
+            })
+        }else if(isNaN(parseInt(req.params.id))){
+            return res.status(400).send({
+                status: 400,
+                error: "An integer is required to be passed in"
+            })
+        }
+
+        next()
+    }
 }
 
 const officeMiddleware = new OfficeMiddleware()

@@ -35,6 +35,16 @@ class CandidatesModel{
             console.log(error)
         }
     }
+
+    async selectCandidatesByOffice(officeVal){
+        const query = 'SELECT * FROM candidates WHERE office=$1'
+        try {
+            const {rows}  = await pool.query(query, officeVal)
+            return rows
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 const candidatesModel = new CandidatesModel()
