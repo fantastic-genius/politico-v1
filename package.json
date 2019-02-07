@@ -4,7 +4,7 @@
   "description": "voting application",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill server/tests/*.js",
+    "test": "npm run drop && npm run migrate && npm run seeddb && nyc --reporter=html --reporter=text mocha --require babel-register --require babel-polyfill server/tests/*.js",
     "start": "nodemon index.js --exec babel-node",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "users": "babel-node ./server/migration/users.js createUsersTable",
@@ -20,7 +20,8 @@
     "dropvotes": "babel-node ./server/migration/votes.js dropVotesTable",
     "droppetitions": "babel-node ./server/migration/petitions.js dropPetitionsTable",
     "migrate": "npm run users && npm run  parties && npm run offices && npm run  candidates && npm run  votes && npm run  petitions",
-    "drop": "npm run  droppetitions && npm run  dropvotes && npm run  dropcandidates && npm run dropoffices && npm run  dropparties && npm run dropusers"
+    "drop": "npm run  droppetitions && npm run  dropvotes && npm run  dropcandidates && npm run dropoffices && npm run  dropparties && npm run dropusers",
+    "seeddb": "babel-node ./server/migration/seed.js seedDatabase seedDatabase2"
   },
   "repository": {
     "type": "git",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "istanbul": "^0.4.5",
     "make-runnable": "^1.3.6",
     "mocha-lcov-reporter": "^1.3.0",

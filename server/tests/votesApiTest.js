@@ -1,4 +1,8 @@
 import app from '../../index'
+import jwt from 'jsonwebtoken'
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const chai = require("chai")
 const chaiHttp = require("chai-http")
@@ -6,13 +10,17 @@ const chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 const should = chai.should();
 
+const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
+                    process.env.SECRET,
+                    {expiresIn: '12h'})
+
 describe("Votes", () => {
     describe("POST /api/v1/votes", () => {
         it("Should return status and user votes details", (done) => {
             chai.request(app)
                 .post("/api/v1/votes")
+                .set("x-access-token", token)
                 .send({
-                    createdBy: 65,
                     office: 1,
                     candidate: 1
                 })

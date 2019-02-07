@@ -108,17 +108,18 @@ class AuthMiddleware{
         }
 
         try {
-            const decoded_token = jwt.verify(token, process.env.SECRET)
-            const user_id = decoded_token.id
-            const user = usersModel.selectUserById([user_id])
+            const decoded_token = await jwt.verify(token, process.env.SECRET)
+            const id = decoded_token.id
+            const is_admin = decoded_token.is_admin
+            const user = usersModel.selectUserById([id])
             user.then(rows => {
                 if(rows.length === 0){
                     return res.status(400).send({
                         status: 400,
-                        error: "Invalid token provided"
+                        error: "Invalid token provided. You are not authorized to access this page"
                     })
                 }else{
-                    req.user = {id: user_id}
+                    req.user = {id, is_admin}
                     next()
                 }
             })

@@ -12,7 +12,7 @@ class AuthController{
         const user = usersModel.createUser(values)
         user.then(rows => {
             if(rows.length > 0){
-                const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
+                const token = jwt.sign({id: rows[0].id, email: rows[0].email, is_admin:rows[0].isadmin}, 
                     process.env.SECRET,
                     {expiresIn: '12h'})
                     
@@ -48,7 +48,7 @@ class AuthController{
         user.then(rows => {
             if(rows.length > 0){
                 if(bcrypt.compareSync(unhashed_pass, rows[0].password)){
-                    const token = jwt.sign({id: rows[0].id, email: rows[0].email}, 
+                    const token = jwt.sign({id: rows[0].id, email: rows[0].email, is_admin:rows[0].isadmin}, 
                         process.env.SECRET,
                         {expiresIn: '12h'})
                         
