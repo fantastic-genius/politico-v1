@@ -1,4 +1,7 @@
 import pool from "../config"
+import debug from "debug"
+
+const debugg = debug('officesmodel:')
 class OfficesModel{
 
     async createOffice(values){
@@ -11,7 +14,7 @@ class OfficesModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -22,7 +25,7 @@ class OfficesModel{
             const {rows} = await pool.query(query, idval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -33,7 +36,7 @@ class OfficesModel{
             const {rows} = await pool.query(query)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 }

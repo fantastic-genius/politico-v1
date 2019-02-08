@@ -1,4 +1,7 @@
 import pool from "../config"
+import debug from "debug"
+
+const debugg = debug('candidatemodel:')
 
 class VotesModel{
     async createVote(values){
@@ -11,7 +14,7 @@ class VotesModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -22,7 +25,7 @@ class VotesModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -33,7 +36,7 @@ class VotesModel{
             const  {rows} = await pool.query(query, officeVal)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 }

@@ -1,4 +1,7 @@
 import pool from "../config"
+import debug from "debug"
+
+const debugg = debug('partiesmodel:')
 class PartiesModel{
 
     async createParty(values){
@@ -11,7 +14,7 @@ class PartiesModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -22,7 +25,7 @@ class PartiesModel{
             const {rows} = await pool.query(query, idval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -33,7 +36,7 @@ class PartiesModel{
             const {rows} = await pool.query(query, nameval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -44,7 +47,7 @@ class PartiesModel{
             const {rows} = await pool.query(query)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -57,7 +60,7 @@ class PartiesModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -70,7 +73,7 @@ class PartiesModel{
             const {rows} = await pool.query(query, idval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 }

@@ -21,8 +21,8 @@ describe("Votes", () => {
                 .post("/api/v1/votes")
                 .set("x-access-token", token)
                 .send({
-                    office: 1,
-                    candidate: 1
+                    office: "1",
+                    candidate: "1"
                 })
                 .end((err, res) => {
                     should.not.exist(err);
@@ -31,6 +31,23 @@ describe("Votes", () => {
                     res.body.should.be.a('object');
                     res.body.status.should.equal(201);
                     res.body.data[0].should.include.keys('office', 'candidate', 'voter');
+                    done();
+                })
+        })
+    })
+
+    describe("GET /api/v1/offices/<id>/result", () => {
+        it('should return the result of election for an office', (done) => {
+            chai.request(app)
+                .get("/api/v1/offices/1/result")
+                .set("x-access-token", token)
+                .end((err, res) => {
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.type.should.equal("application/json");
+                    res.body.should.be.a('object');
+                    res.body.status.should.equal(200);
+                    res.body.data[0].should.include.keys('office', 'candidate', 'result');
                     done();
                 })
         })

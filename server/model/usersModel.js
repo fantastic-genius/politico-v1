@@ -1,4 +1,7 @@
 import pool from "../config"
+import debug from "debug"
+
+const debugg = debug('usersmodel:')
 class UsersModel{
     async createUser(values){
         const query = `INSERT INTO 
@@ -10,7 +13,7 @@ class UsersModel{
             const {rows} = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
         
     }
@@ -23,7 +26,7 @@ class UsersModel{
             const {rows} = await pool.query(query)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
         
     }
@@ -35,7 +38,7 @@ class UsersModel{
             const {rows} = await pool.query(query, idval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
         
     }
@@ -47,7 +50,7 @@ class UsersModel{
             const {rows} = await pool.query(query, value)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
         
     }
