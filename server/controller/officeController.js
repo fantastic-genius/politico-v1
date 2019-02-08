@@ -100,8 +100,8 @@ class OfficeController{
         const {office, party} = req.body
         const user_id = req.params.id
         const values = [office, party, user_id]
-        const promis = candidatesModel.createCandidate(values)
-        promis.then(rows => {
+        const candidates = candidatesModel.createCandidate(values)
+        candidates.then(rows => {
             if(rows.length > 0){
                 return res.status(201).send({
                     status: 201,

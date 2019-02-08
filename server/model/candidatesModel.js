@@ -1,4 +1,7 @@
 import pool from "../config"
+import debug from "debug"
+
+const debugg = debug('candidatesmodel:')
 
 class CandidatesModel{
 
@@ -11,7 +14,7 @@ class CandidatesModel{
             const {rows}  = await pool.query(query, values)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
         
     }
@@ -22,7 +25,7 @@ class CandidatesModel{
             const {rows}  = await pool.query(query, candidateVal)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -32,7 +35,7 @@ class CandidatesModel{
             const {rows}  = await pool.query(query, idval)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 
@@ -42,7 +45,7 @@ class CandidatesModel{
             const {rows}  = await pool.query(query, officeVal)
             return rows
         } catch (error) {
-            console.log(error)
+            debugg(error)
         }
     }
 }
