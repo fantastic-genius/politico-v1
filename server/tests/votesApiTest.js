@@ -2,16 +2,15 @@ import app from '../../index'
 import jwt from 'jsonwebtoken'
 import dotenv from "dotenv"
 
-dotenv.config()
-
 const chai = require("chai")
 const chaiHttp = require("chai-http")
 
 chai.use(chaiHttp)
 const should = chai.should();
-
+dotenv.config()
+const SECRET = process.env.SECRET || "nukaleda9306ailus$&fahnius"
 const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
-                    process.env.SECRET,
+                    SECRET,
                     {expiresIn: '12h'})
 
 describe("Votes", () => {

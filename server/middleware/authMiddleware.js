@@ -1,6 +1,9 @@
 import Helper from "../helper/helper"
 import usersModel from "../model/usersModel"
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 class AuthMiddleware{
     signupMiddleware(req, res, next){
