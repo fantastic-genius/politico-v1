@@ -26,13 +26,15 @@ const seedDatabase = () => {
     
 }
 
-const seedDatabase2 = () => {
+const seedCandidates = () => {
     candidates.map(candidat => {
         const {office, party, candidate} = candidat
         const values = [office, party, candidate]
         candidatesModel.createCandidate(values)
     })
+}
 
+const seedVotes = () => {
     votes.map(vote => {
         const {createdby, office, candidate} = vote 
         const values = [createdby, office, candidate]
@@ -41,6 +43,6 @@ const seedDatabase2 = () => {
 }
 
 
-export {seedDatabase, seedDatabase2}
+export {seedDatabase, seedCandidates, seedVotes}
 
 require('make-runnable')

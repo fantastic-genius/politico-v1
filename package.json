@@ -19,9 +19,12 @@
     "dropcandidates": "babel-node ./server/migration/candidates.js dropCandidatesTable",
     "dropvotes": "babel-node ./server/migration/votes.js dropVotesTable",
     "droppetitions": "babel-node ./server/migration/petitions.js dropPetitionsTable",
-    "migrate": "npm run users && npm run  parties && npm run offices && npm run  candidates && npm run  votes && npm run  petitions",
+    "seedotherdb": "babel-node ./server/migration/seed.js seedDatabase",
+    "seedcandidates": "babel-node ./server/migration/seed.js seedCandidates",
+    "seedvotes": "babel-node ./server/migration/seed.js seedVotes",
+    "migrate": "npm run users && npm run parties && npm run offices && npm run candidates && npm run votes && npm run petitions",
     "drop": "npm run  droppetitions && npm run  dropvotes && npm run  dropcandidates && npm run dropoffices && npm run  dropparties && npm run dropusers",
-    "seeddb": "babel-node ./server/migration/seed.js seedDatabase seedDatabase2"
+    "seeddb": "npm run seedotherdb && npm run seedcandidates && npm run seedvotes"
   },
   "repository": {
     "type": "git",

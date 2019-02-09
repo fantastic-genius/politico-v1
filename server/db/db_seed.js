@@ -102,9 +102,9 @@ const candidates = [
 
 const votes = [
     {
-        createdby: 4,
+        createdby: 2,
         office: 1,
-        candidate: 2
+        candidate: 1
     }
 ]
 

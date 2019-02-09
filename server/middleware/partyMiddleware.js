@@ -52,6 +52,11 @@ class PartyMiddleware{
             })
 
             next(); 
+        }).catch(error => {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
         })
 
     }
