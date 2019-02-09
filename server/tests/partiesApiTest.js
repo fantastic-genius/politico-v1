@@ -7,7 +7,7 @@ const chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 const should = chai.should();
 dotenv.config()
-const SECRET = process.env.SECRET || "nukaleda9306ailus$&fahnius"
+const SECRET = process.env.SECRET
 const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
                     SECRET,
                     {expiresIn: '12h'})
@@ -73,10 +73,10 @@ describe("Parties", () => {
     describe("PATCH /api/v1/parties/<id>/name", () => {
         it("should return the status 200 and the id and new name of the edited party", (done) => {
             chai.request(app)
-                .patch("/api/v1/parties/3/name")
+                .patch("/api/v1/parties/1/name")
                 .set("x-access-token", token)
                 .send({
-                    name: "All Progressive Party"
+                    name: "All Peoples Party"
                 })
                 .end((err, res) => {
                     should.not.exist(err)

@@ -8,12 +8,13 @@ const chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 const should = chai.should();
 dotenv.config()
-const SECRET = process.env.SECRET || "nukaleda9306ailus$&fahnius"
+const SECRET = process.env.SECRET
 const token = jwt.sign({id: 1, email: 'admin@politico.com', is_admin: true}, 
                     SECRET,
                     {expiresIn: '12h'})
 
 describe("Votes", () => {
+    
     describe("POST /api/v1/votes", () => {
         it("Should return status and user votes details", (done) => {
             chai.request(app)
