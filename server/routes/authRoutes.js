@@ -7,5 +7,6 @@ const router = express.Router()
 
 router.post(`${authVersionedApi}signup`, authMiddleware.signupMiddleware, authController.signup)
 router.post(`${authVersionedApi}login`, authMiddleware.loginMiddleware, authController.login)
+router.post(`${authVersionedApi}reset`, authMiddleware.resetMiddleware, authController.reset)
 
 export default router

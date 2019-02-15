@@ -49,4 +49,24 @@ describe("Auth", () => {
                 })
         })
     })
+
+
+    describe("POST api/v1/auth/reset", () => {
+        it("should return status 200, and data containing message and email", (done) => {
+            chai.request(app)
+                .post("/api/v1/auth/reset")
+                .send({
+                    email: 'user@politico.com',
+                })
+                .end((err, res) => {
+                    should.not.exist(err)
+                    res.status.should.equal(200)
+                    res.type.should.equal('application/json')
+                    res.body.should.be.a('object');
+                    res.body.status.should.equal(200);
+                    res.body.data[0].should.include.keys('message', 'email');
+                    done();
+                })
+        })
+    })
 })
