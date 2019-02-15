@@ -80,6 +80,17 @@ class AuthController{
             })
         })
     }
+
+    reset(req, res){
+        const {email} = req.body
+        return res.status(200).send({
+            status: 200,
+            data: [{
+                message: "Check your email for password reset link",
+                email
+            }]
+        })
+    }
 }
 
 const authController = new AuthController()

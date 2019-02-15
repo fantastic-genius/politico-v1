@@ -43,11 +43,11 @@ class UsersModel{
         
     }
 
-    async selectAUser(value){
+    async selectAUser(emailVal){
         const query = 'SELECT * FROM users WHERE email=$1'
 
         try {
-            const {rows} = await pool.query(query, value)
+            const {rows} = await pool.query(query, emailVal)
             return rows
         } catch (error) {
             debugg(error)

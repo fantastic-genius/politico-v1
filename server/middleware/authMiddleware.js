@@ -138,6 +138,42 @@ class AuthMiddleware{
             }
         }
     }
+
+    resetMiddleware(req, res, next){
+        if(!req.body.email || !(req.body.email).trim()){
+            return res.status(400).send({
+                status: 400,
+                error: "Email not provided"
+            })
+        }else if(!isNaN(Number(req.body.email))){
+            return res.status(400).send({
+                status: 400,
+                error: "Email contains an integer instead of a string" 
+            })
+        }else if(!Helper.isValidEmail(req.body.email)){
+            return res.status(400).send({
+                status: 400,
+                error: "Value provided not a valid email"
+            })
+        }
+
+        const user = usersModel.selectAUser([req.body.email])
+        user.then(rows => {
+            if(rows.length == 0){
+                return res.status(404).send({
+                    status: 404,
+                    error: "Such email doesn't exist"
+                })
+            }else{
+                next()
+            }
+        }).catch(error => {
+            return res.status(500).send({
+                status: 500,
+                error: "Something went wrong, cannot process your request. Pleae try again"
+            })
+        })
+    }
 }
 
 const authMiddleware = new AuthMiddleware()
