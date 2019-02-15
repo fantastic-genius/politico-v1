@@ -14,7 +14,8 @@ const createPetitionsTable = () => {
             createdOn TIMESTAMP,
             createdBy INT NOT NULL,
             office INT NOT NULL,
-            body TEXT NOT NULL,
+            body VARCHAR NOT NULL,
+            evidence VARCHAR,
             FOREIGN KEY (createdBy) REFERENCES users (id) ON DELETE CASCADE,
             FOREIGN KEY (office) REFERENCES offices (id) ON DELETE CASCADE
             )`
