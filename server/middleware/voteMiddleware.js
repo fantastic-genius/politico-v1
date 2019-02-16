@@ -5,7 +5,7 @@ import votesModel from "../model/votesModel"
 class VoteMiddleWare{
     createVoteMiddleware(req, res, next){
 
-        if(!req.user || !req.user.id){
+        if(!req.user && !req.user.id){
             return res.status(400).send({
                 status: 400,
                 error: "User not provided"

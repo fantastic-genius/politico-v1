@@ -1,7 +1,7 @@
 import pool from "../config"
 import debug from "debug"
 
-const debugg = debug('candidatemodel:')
+const debugg = debug('votesmodel:')
 
 class VotesModel{
     async createVote(values){

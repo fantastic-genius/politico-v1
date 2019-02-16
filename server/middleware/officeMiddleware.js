@@ -5,9 +5,9 @@ import partiesModel from "../model/partiesModel"
 import candidatesModel from "../model/candidatesModel"
 class OfficeMiddleware{
     createOfficeMiddleware(req, res, next){
-        if(process.env.NODE_ENV !== 'test' && !req.user || req.user.is_admin === false){
-            return res.status(401).send({
-                status: 401,
+        if(process.env.NODE_ENV !== 'test' && !req.user && !req.user.id && req.user.is_admin === false){
+            return res.status(403).send({
+                status: 403,
                 error: "You are not authorized to access this page" 
             })
         }else if(!req.body.type || !(req.body.type).trim()){
@@ -48,9 +48,9 @@ class OfficeMiddleware{
     }
 
     createCandidateMiddleware(req, res, next){
-        if(req.user.is_admin === false){
-            return res.status(401).send({
-                status: 401,
+        if(!req.user && !req.user.id && req.user.is_admin === false){
+            return res.status(403).send({
+                status: 403,
                 error: "You are not authorized to access this page" 
             })
         }else if(!req.body.office){
@@ -140,7 +140,13 @@ class OfficeMiddleware{
     }
 
     getOfficeVotesMiddleware(req, res, next){
-        if(!req.params.id){
+        if(!req.user && !req.user.id){
+            return res.status(401).send({
+                status: 401,
+                error: `You are not authorized to visit this endpoint. 
+                        Please kindly login or create an account to have access`
+            })
+        }else if(!req.params.id){
             return res.status(400).send({
                 status: 400,
                 error: "Office Id not provided"
