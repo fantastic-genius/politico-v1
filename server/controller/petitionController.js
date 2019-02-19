@@ -1,5 +1,4 @@
 import petitionsModel from "../model/petitionsModel"
-
 class PetitionController{
     createPetition(req, res){
         const {office, body, evidence} = req.body
