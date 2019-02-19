@@ -6,10 +6,13 @@ import officeRouter from "./server/routes/officeRoutes"
 import authRouter from "./server/routes/authRoutes"
 import voteRouter from "./server/routes/voteRoutes"
 import petitionRouter from "./server/routes/petitionRoutes"
+import swaggerUi from  "swagger-ui-express"
+import YAML from "yamljs"
  
 const PORT = 5000
 const app = express()
 const debugg = debug('app:')
+const swaggerDocument = YAML.load("./politico-api.yaml")
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
@@ -18,6 +21,7 @@ app.use(officeRouter)
 app.use(authRouter)
 app.use(voteRouter)
 app.use(petitionRouter)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 if(!module.parent){
     app.listen(process.env.PORT || PORT, () => {
