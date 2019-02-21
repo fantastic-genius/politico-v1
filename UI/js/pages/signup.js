@@ -35,7 +35,7 @@ const signUp = (e) => {
     }else if(password !== passwordconf){
         displayMessage('danger', 'Passwords provided doesn\'t not match')
     }else{
-        fetch('http://localhost:5000/api/v1/auth/signup', {
+        fetch('https://politico-gen.herokuapp.com/api/v1/auth/signup', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
