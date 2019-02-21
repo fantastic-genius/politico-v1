@@ -8,12 +8,14 @@ import voteRouter from "./server/routes/voteRoutes"
 import petitionRouter from "./server/routes/petitionRoutes"
 import swaggerUi from  "swagger-ui-express"
 import YAML from "yamljs"
+import cors from 'cors'
  
 const PORT = 5000
 const app = express()
+const router = express.Router()
 const debugg = debug('app:')
 const swaggerDocument = YAML.load("./politico-api.yaml")
-
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(partyRouter)
