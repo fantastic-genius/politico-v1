@@ -56,8 +56,13 @@ const signUp = (e) => {
                 const msg = `You have successfuly Registered. 
                             You can log into you acount here  <a href='login.html'>Login</a>`
                 displayMessage('success', msg)
+
+                const inputFields = document.querySelectorAll('input')
+                inputFields.forEach(field => {
+                    field.value = ''
+                })
             }else{
-                displayMessage('success', data.error)
+                displayMessage('error', data.error)
             }
         }).catch(error => {
             console.log(error)
