@@ -1,3 +1,7 @@
+const token = sessionStorage.getItem('token')
+if(!token){
+    window.location.replace('login.html')
+}
 //Method to display alert message
 const displayMessage = ((type, msg) => {
     const alertDiv = document.querySelector('#alert')
