@@ -1,5 +1,6 @@
 const token = sessionStorage.getItem('token')
-if(!token){
+const isAdmin = sessionStorage.getItem('is_admin')
+if(!token || isAdmin == 'false'){
     window.location.replace('login.html')
 }
 //Method to display alert message

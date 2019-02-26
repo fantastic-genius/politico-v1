@@ -53,6 +53,7 @@ const login = (e) => {
                 sessionStorage.setItem('email', data.data[0].user.email)
                 sessionStorage.setItem('user_name', name)
                 sessionStorage.setItem('passport_url', passporturl)
+                sessionStorage.setItem('is_admin', isadmin)
                 if(isadmin === true){
                     window.location.replace('admin_dashboard.html')
                 }else{
