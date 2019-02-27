@@ -115,4 +115,62 @@ if(parties_tbl){
 
 ///----####---GET ALL PARTIES END----####----///
 
+///----####---EDIT PARTY START----####----///
+const edit_form = document.querySelector('#edit-party')
 
+const editParty = (e) => {
+    e.preventDefault()
+    const url = new URL(window.location.href)
+    const party_id = url.searchParams.get('id')
+    const formData = new URLSearchParams(new FormData(edit_form))
+    fetch(`https://politico-gen.herokuapp.com/api/v1/parties/${party_id}/name/`, {
+        method: 'PATCH',
+        headers: {
+            'Accept': 'application/json',
+            'x-access-token': token
+        },
+        body: formData
+    }).then(res => {
+        return res.json()
+    }).then(data => {
+        if(data.status == 200){
+            const msg = `The party have successfully being edited`
+            displayMessage('success', msg)
+            window.location.href = 'political-parties.html'
+        }else{
+            displayMessage('danger', data.error)
+        }
+    }).catch(error => {
+        console.log(error)
+    })
+}
+
+if(edit_form){
+    const url = new URL(window.location.href)
+    const party_id = url.searchParams.get('id')
+
+    fetch(`https://politico-gen.herokuapp.com/api/v1/parties/${party_id}`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'x-access-token': token
+        }
+    }).then(res => {
+        return res.json()
+    }).then(data => {
+        if(data.status == 200){
+            const name_field = document.querySelector('#name')
+            const party = data.data[0]
+            name_field.value = party.name
+        }else{
+            displayMessage('danger', data.error)
+        }
+    }).catch(error => {
+        console.log(error)
+    })
+
+    const edit_btn = document.querySelector('#edit-btn')
+    edit_btn.addEventListener('click', editParty)
+}
+
+///----####---EDIT PARTY END----####----///
