@@ -28,36 +28,51 @@ const displayMessage = ((type, msg) => {
 const addPartyForm = document.querySelector('#add-party')
 const addParty = (e) => {
     e.preventDefault();
-    const formData = new FormData(addPartyForm)
-    fetch('https://politico-gen.herokuapp.com/api/v1/parties', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'x-access-token': token
-        },
-        body: formData
-    }).then(res => {
-        return res.json()
-    }).then(data => {
-        if(data.status == 201){
-            const msg = `You have successfuly created a new party`
-            displayMessage('success', msg)
 
-            const inputFields = document.querySelectorAll('input')
-            let i = 1
-            inputFields.forEach(field => {
-                if(i < inputFields.length){
-                    field.value = ''
-                    i++
-                }
-            })
-        }else{
-            displayMessage('danger', data.error)
-        }
-    }).catch(error => {
-        console.log(error)
-    })
+    const name_field = document.querySelector('#name').value
+    const hqaddress_field = document.querySelector('#hqAddress').value
+    const logo_field = document.querySelector('#image').value
 
+    if(!name_field || !(name_field.trim())){
+        let msg = 'Party name is required'
+        displayMessage('danger', msg)
+    }else if(!hqaddress_field || !(hqaddress_field.trim())){
+        let msg = 'Party headquarter is required'
+        displayMessage('danger', msg)
+    }else if(!logo_field || !(logo_field.trim())){
+        let msg = 'Party logo is not yet attached'
+        displayMessage('danger', msg)
+    }else{
+        const formData = new FormData(addPartyForm)
+        fetch('https://politico-gen.herokuapp.com/api/v1/parties', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'x-access-token': token
+            },
+            body: formData
+        }).then(res => {
+            return res.json()
+        }).then(data => {
+            if(data.status == 201){
+                const msg = `You have successfuly created a new party`
+                displayMessage('success', msg)
+
+                const inputFields = document.querySelectorAll('input')
+                let i = 1
+                inputFields.forEach(field => {
+                    if(i < inputFields.length){
+                        field.value = ''
+                        i++
+                    }
+                })
+            }else{
+                displayMessage('danger', data.error)
+            }
+        }).catch(error => {
+            console.log(error)
+        })
+    }
 }
 
 if(addPartyForm){
