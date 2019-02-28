@@ -31,7 +31,7 @@ const login = (e) => {
         displayMessage('danger', 'Password not provided')
     }else{
         const formData = new URLSearchParams(new FormData(loginForm))
-        fetch('https://politico-gen.herokuapp.com/api/v1/auth/login', {
+        fetch('http://localhost:5000/api/v1/auth/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json'
@@ -52,6 +52,7 @@ const login = (e) => {
                 sessionStorage.setItem('token', data.data[0].token)
                 sessionStorage.setItem('email', data.data[0].user.email)
                 sessionStorage.setItem('user_name', name)
+                sessionStorage.setItem('user_id', data.data[0].user.id)
                 sessionStorage.setItem('passport_url', passporturl)
                 sessionStorage.setItem('is_admin', isadmin)
                 if(isadmin === true){
