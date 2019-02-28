@@ -67,7 +67,7 @@ const loadAspirants = () => {
     const alert_div = document.querySelector('#alert')
     alert_div.innerHTML = ''
     const office_id = document.querySelector('#office-select').value
-    fetch(`http://localhost:5000/api/v1/offices/${office_id}/candidates`, {
+    fetch(`https://politico-gen.herokuapp.com/api/v1/offices/${office_id}/candidates`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -113,7 +113,7 @@ const loadAspirants = () => {
 const getVotedOffices = async () => {
     try{
         const user_id = sessionStorage.getItem('user_id')
-        const offices = await fetch(`http://localhost:5000/api/v1/votes/${user_id}/user`, {
+        const offices = await fetch(`https://politico-gen.herokuapp.com/api/v1/votes/${user_id}/user`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -164,7 +164,7 @@ const voteCandidate = (e) => {
     const target = e.target
     const candidate_id = target.dataset.candidate
     const office_id = document.querySelector('#office-select').value
-    fetch('http://localhost:5000/api/v1/votes', {
+    fetch('https://politico-gen.herokuapp.com/api/v1/votes', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -191,7 +191,7 @@ const voteCandidate = (e) => {
 }
 
 const loadOffices = () => {
-    fetch('http://localhost:5000/api/v1/offices', {
+    fetch('https://politico-gen.herokuapp.com/api/v1/offices', {
         method: 'GET',
         headers: {
             Accept: 'application/json',

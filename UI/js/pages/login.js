@@ -31,7 +31,7 @@ const login = (e) => {
         displayMessage('danger', 'Password not provided')
     }else{
         const formData = new URLSearchParams(new FormData(loginForm))
-        fetch('http://localhost:5000/api/v1/auth/login', {
+        fetch('https://politico-gen.herokuapp.com/api/v1/auth/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json'

@@ -65,7 +65,7 @@ describe("Votes", () => {
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(200);
-                    res.body.data[0].should.include.keys('officeid', 'officename', 'firstname', 'lastname', 'othername', 'partyname', 'logourl');
+                    res.body.data[0].should.include.keys('officeid', 'officename', 'firstname', 'lastname', 'othername', 'passporturl', 'partyname', 'logourl');
                     done();
                 })
         })
