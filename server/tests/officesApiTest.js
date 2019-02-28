@@ -102,7 +102,7 @@ describe("Offices", () => {
                     res.type.should.equal("application/json");
                     res.body.should.be.a('object');
                     res.body.status.should.equal(200);
-                    res.body.data[0].should.include.keys('id', 'office', 'party', 'candidate');
+                    res.body.data[0].should.include.keys('id', 'userid', 'firstname', 'lastname', 'othername', 'passporturl', 'partyname', 'logourl');
                     done();
                 })
         })
