@@ -83,7 +83,7 @@ describe("Auth", () => {
             chai.request(app)
                 .patch("/api/v1/auth/reset/password")
                 .send({
-                    token,
+                    resetToken: token,
                     password: 'password'
                 })
                 .end((err, res) => {
