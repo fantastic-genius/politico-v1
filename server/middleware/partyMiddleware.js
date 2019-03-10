@@ -25,7 +25,7 @@ class PartyMiddleware{
         }else if(!req.body.logoUrl || !(req.body.logoUrl).trim()){
             return res.status(400).send({
                 status: 400,
-                error: "Party logo Url not included in the data posted" 
+                error: "Party logo not uploaded" 
             })
         }else if(!isNaN(parseInt(req.body.name))){
             return res.status(400).send({
